@@ -51,29 +51,110 @@ What's the time complexity?
  */
 
 function Stack(capacity) {
-  // implement me...
+	this.capacity = capacity;
+	this.stack = {};
+	this.size = 0;
 }
 
 Stack.prototype.push = function(value) {
-  // implement me...
+	// If size is limited see check if stack is at max ? *log error* : *proceed*
+	if (this.capacity && this.size >= this.capacity) {
+		return console.error(
+			"Max capacity already reached. Remove element before adding a new one."
+		);
+	}
+
+	console.log("Adding item to the stack!");
+	// Add value to top of stack
+	this.stack[this.size] = value;
+
+	// Increment Size by 1
+	return ++this.size;
 };
 // Time complexity:
 
 Stack.prototype.pop = function() {
-  // implement me...
+	// If there are any values to remove? *proceed* : *log error*
+	if (this.size <= 0) return console.log("This stack is currently empty!");
+
+	// Remove top most from stack
+	// Decrement size
+	console.log("Removing top item from stack!");
+	this.stack[--this.size];
+
+	return this.size;
 };
 // Time complexity:
 
 Stack.prototype.peek = function() {
-  // implement me...
+	// Return value of top most[a.k.a last in] item
+	console.log(`The next item on the stack is: ${this.stack[this.size - 1]}`);
+	return this.stack[this.size - 1];
 };
 // Time complexity:
 
 Stack.prototype.count = function() {
-  // implement me...
+	// Return size of the stack
+	console.log(`The stack is currently ${this.size} items large`);
+	return this.size;
 };
 // Time complexity:
 
+Stack.prototype.contains = function(findme) {
+	// Create Result Variable
+	let found = false;
+
+	// Loop over stack value
+	for (const g in this.stack) {
+		if (this.stack[g] == findme) {
+			found == true;
+		}
+	}
+
+	found &&
+		console.log(
+			`This stack does ${found ? "" : "not"} contain the value ${findme}`
+		);
+	return found;
+};
+
+Stack.prototype.until = function(until) {
+	let index;
+	let currentIndex = this.size - 1;
+	// If stack contains value `until` ? *proceed* : *Log Error*
+	if (!this.contains(until))
+		return console.error(
+			`The item ${until} is not contained within this stack!`
+		);
+
+	// Loop backward over stack to determine index [property_name] of 'until' value
+	while (index && currentIndex < 0) {
+		if (this.stack[currentIndex] == until) {
+			index = this.stack[currentIndex];
+			break;
+		}
+		--currentIndex;
+	}
+
+	console.log(
+		`The ${index == 1 ? "is" : "are"} items until ${until} in the stack `
+	);
+	return this.size - 1 - index;
+};
+
+const S = new Stack(5);
+S.push("Boston");
+S.push("Seattle");
+S.push("Cuba");
+S.push("Lisbon");
+S.push("San Francisco");
+S.push("Moscow");
+S.count();
+S.pop();
+S.contains("Cuba");
+S.contains("until");
+S.until("Boston");
+S.peek();
 
 /*
 *** Exercises:
